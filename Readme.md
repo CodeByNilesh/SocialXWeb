@@ -1,4 +1,4 @@
-# SocialX is a social media web application built using the Django framework. This project was created to provide a platform for users to connect and communicate in real-time. The application features user authentication, real-time messaging, and a dynamic feed.
+# SocialX is a social media website built using the Django framework. This project was created to provide a platform for users to connect and communicate in real-time. The application features user authentication, real-time messaging, and a dynamic feed.
 
 Features:
 - User Authentication: Secure registration and login system.

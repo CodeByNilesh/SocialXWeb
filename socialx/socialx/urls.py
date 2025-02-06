@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
+    path('settings/',views.settings, name='settings'),
     path('chatx/', include('chatx.urls')),
     path('accounts/', include('django.contrib.auth.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

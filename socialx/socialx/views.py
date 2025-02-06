@@ -5,3 +5,6 @@ def home(request):
 
 def about(request):
     return render(request, 'website/about.html')
+
+def settings(request):
+    return render(request, 'website/settings.html')

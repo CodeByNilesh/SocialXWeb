@@ -6,5 +6,7 @@ Features:
 - Dynamic Feed: View and interact with posts from other users.
 - Responsive Design: Optimized for both desktop and mobile devices.
 
-Demo/Screenshot:
+Demo/Screenshots:
 <img width="1880" height="870" alt="image" src="https://github.com/user-attachments/assets/8f2016eb-9eec-415f-ab30-b666d051f0f5" />
+<img width="1902" height="909" alt="image" src="https://github.com/user-attachments/assets/fbbfd824-2f42-4d4a-bc7c-f7c4cc05287a" />
+

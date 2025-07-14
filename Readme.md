@@ -5,3 +5,6 @@ Features:
 - Real-Time Messaging: Instant messaging capabilities using WebSockets.
 - Dynamic Feed: View and interact with posts from other users.
 - Responsive Design: Optimized for both desktop and mobile devices.
+
+Demo/Screenshot:
+<img width="1880" height="870" alt="image" src="https://github.com/user-attachments/assets/8f2016eb-9eec-415f-ab30-b666d051f0f5" />

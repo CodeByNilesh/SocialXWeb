@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h2>Login form</h2>
+
+<div class="text-center">
+<h1>Login</h1>
 <form method="post">
     {% csrf_token %}
     {{form.as_p}}
@@ -9,5 +11,6 @@
 
 </form>
 <p>Don't have an account <a href="{% url 'register' %}">Register here</a></p>
+</div>
 
 {% endblock  %}

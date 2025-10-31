@@ -1,13 +1,29 @@
-# SocialX is a social media website built using the Django framework. This project was created to provide a platform for users to connect and communicate in real-time. The application features user authentication, real-time messaging, and a dynamic feed.
+# ChatX - Social Media Platform
 
-Features:
-- User Authentication: Secure registration and login system.
-- Real-Time Messaging: Instant messaging capabilities using WebSockets.
-- Dynamic Feed: View and interact with posts from other users.
-- Responsive Design: Optimized for both desktop and mobile devices.
+A modern social media platform built with Django, featuring posts, comments, likes, follows, and more!
 
-Demo/Screenshots:
-<img width="1902" height="909" alt="image" src="https://github.com/user-attachments/assets/fbbfd824-2f42-4d4a-bc7c-f7c4cc05287a" />
-<img width="1880" height="870" alt="image" src="https://github.com/user-attachments/assets/8f2016eb-9eec-415f-ab30-b666d051f0f5" />
+## 🚀 Features
 
+- ✅ User authentication (Register, Login, Logout)
+- ✅ Create posts with images/videos (up to 100MB)
+- ✅ Like, comment, and save posts
+- ✅ User profiles with bio and profile pictures
+- ✅ Follow/unfollow users
+- ✅ Real-time notifications
+- ✅ Search users and posts
+- ✅ Dark/Light mode toggle
+- ✅ Private account settings
+- ✅ Responsive design
 
+## 📋 Prerequisites
+
+- Python 3.11+
+- pip
+- virtualenv (recommended)
+
+## 🛠️ Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/SocialX-Web.git
+   cd SocialX-Web

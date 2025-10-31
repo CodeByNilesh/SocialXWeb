@@ -1,0 +1,146 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ profile_user.username }}'s Profile
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-5">
+        <div class="col-md-3 text-center">
+            {% if profile_user.profile.image %}
+                <img src="{{ profile_user.profile.image.url }}" 
+                     class="img-fluid rounded-circle" 
+                     alt="{{ profile_user.username }}'s profile picture"
+                     style="width: 150px; height: 150px; object-fit: cover;">
+            {% else %}
+                <img src="https://ui-avatars.com/api/?name={{ profile_user.username }}&background=random&size=150" 
+                     class="img-fluid rounded-circle" 
+                     alt="{{ profile_user.username }}'s profile picture">
+            {% endif %}
+        </div>
+        
+        <div class="col-md-9">
+            <div class="d-flex align-items-center mb-3">
+                <h2 class="me-4 mb-0">{{ profile_user.username }}</h2>
+                
+                {% if user.is_authenticated %}
+                    {% if user == profile_user %}
+                        <a href="{% url 'settings' %}" class="btn btn-outline-secondary">
+                            ⚙️ Edit Profile
+                        </a>
+                    {% else %}
+                        <a href="{% url 'follow' profile_user.username %}" class="btn btn-primary">
+                            {% if is_following %}
+                                ✓ Following
+                            {% else %}
+                                + Follow
+                            {% endif %}
+                        </a>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            <div class="d-flex mb-3">
+                <div class="me-4">
+                    <strong>{{ posts.count }}</strong> Posts
+                </div>
+                <div class="me-4">
+                    <strong>{{ profile_user.profile.followed_by.count }}</strong> Followers
+                </div>
+                <div>
+                    <strong>{{ profile_user.profile.follows.count }}</strong> Following
+                </div>
+            </div>
+
+            {% if profile_user.get_full_name and profile_user.get_full_name != profile_user.username %}
+                <h5 class="fw-bold">{{ profile_user.get_full_name }}</h5>
+            {% endif %}
+            
+            <p>
+                {% if profile_user.profile.bio %}
+                    {{ profile_user.profile.bio|linebreaks }}
+                {% else %}
+                    <em class="text-muted">No bio yet.</em>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <h4 class="mb-4 text-center">Posts</h4>
+
+    {% if posts %}
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+            {% for post in posts %}
+            <div class="col">
+                <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none">
+                    <div class="card h-100 post-card">
+                        {% if post.image %}
+                            <img src="{{ post.image.url }}" 
+                                 class="card-img-top" 
+                                 alt="Post image"
+                                 style="height: 250px; object-fit: cover;">
+                        {% elif post.video %}
+                            <div class="position-relative">
+                                <video class="card-img-top" style="height: 250px; object-fit: cover; background-color: #000;">
+                                    <source src="{{ post.video.url }}" type="video/mp4">
+                                </video>
+                                <div class="position-absolute top-50 start-50 translate-middle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="white" class="bi bi-play-circle-fill" viewBox="0 0 16 16" style="opacity: 0.8;">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" 
+                                 style="height: 250px;">
+                                <p class="text-muted p-3">{{ post.text|truncatewords:20 }}</p>
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <p class="card-text small text-dark">{{ post.text|truncatewords:15 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">{{ post.created_at|timesince }} ago</small>
+                                <div>
+                                    <small class="text-muted">❤️ {{ post.likes.count }}</small>
+                                    <small class="text-muted ms-2">💬 {{ post.comments.count }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center mt-4">
+            <h5>No posts yet</h5>
+            {% if user == profile_user %}
+                <p>Share your first post!</p>
+                <a href="{% url 'post_create' %}" class="btn btn-primary">Create Post</a>
+            {% else %}
+                <p>{{ profile_user.username }} hasn't posted anything yet.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+</div>
+
+<style>
+.post-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+body.dark-mode .post-card .text-dark {
+    color: #e8e8e8 !important;
+}
+</style>
+{% endblock %}

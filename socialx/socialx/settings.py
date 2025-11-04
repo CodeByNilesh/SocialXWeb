@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     'chatx',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [

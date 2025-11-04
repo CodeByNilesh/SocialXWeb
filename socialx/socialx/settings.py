@@ -4,7 +4,6 @@ Django settings for socialx project.
 from dotenv import load_dotenv
 from pathlib import Path
 import os
-import socket
 
 # Build paths
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,27 +17,11 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-CHANGE-THIS-IN-PROD
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-# Get local IP for mobile access
-def get_local_ip():
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(("8.8.8.8", 80))
-        ip = s.getsockname()[0]
-        s.close()
-        return ip
-    except:
-        return '127.0.0.1'
-
-LOCAL_IP = get_local_ip()
-
 # Allowed hosts
 ALLOWED_HOSTS = [
-    'socialxweb.onrender.com',
+    'codebynilesh.pythonanywhere.com',
     'localhost',
     '127.0.0.1',
-    '0.0.0.0',
-    'socialxweb.pythonanywhere.com',
-    LOCAL_IP,
 ]
 
 # Application definition
@@ -49,6 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'chatx',
 ]
 
@@ -82,26 +67,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'socialx.wsgi.application'
 
-# Database
-# Use PostgreSQL in production, SQLite in development
-if os.getenv('DATABASE_URL'):
-    # Production: PostgreSQL
-    import dj_database_url
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv('DATABASE_URL'),
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
+# Database - SQLite
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    # Development: SQLite
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -153,6 +125,17 @@ if USE_GMAIL or not DEBUG:
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     DEFAULT_FROM_EMAIL = 'SocialX Web <noreply@socialxweb.com>'
+
+# Cloudinary Configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('dyt08mpkv'),
+    'API_KEY': os.getenv('813254895469284'),
+    'API_SECRET': os.getenv('3hk4Uk8eeFXzmDuZEM1oGQnJMIo')
+}
+
+# Use Cloudinary for media files in production
+if not DEBUG:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Security settings for production
 if not DEBUG:

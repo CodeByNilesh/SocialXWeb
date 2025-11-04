@@ -1,0 +1,101 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card border-danger shadow-lg">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Delete Account
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger">
+                        <h5><i class="bi bi-exclamation-octagon me-2"></i>Warning!</h5>
+                        <p class="mb-0">This action is <strong>permanent and cannot be undone</strong>.</p>
+                    </div>
+
+                    <h5 class="mb-3">What will be deleted:</h5>
+                    <ul class="mb-4">
+                        <li>✖️ Your profile and bio</li>
+                        <li>✖️ All your posts ({{ user.post_set.count }})</li>
+                        <li>✖️ All your comments ({{ user.comment_set.count }})</li>
+                        <li>✖️ All your likes and saves</li>
+                        <li>✖️ Your followers and following connections</li>
+                        <li>✖️ All uploaded images and videos</li>
+                    </ul>
+
+                    <div class="bg-light p-3 rounded mb-4">
+                        <p class="mb-2"><strong>Before you delete:</strong></p>
+                        <ul class="mb-0">
+                            <li>Download your data if needed</li>
+                            <li>Consider deactivating instead (coming soon)</li>
+                            <li>You can always create a new account later</li>
+                        </ul>
+                    </div>
+
+                    <form method="POST" onsubmit="return confirmDelete()">
+                        {% csrf_token %}
+                        
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="confirmCheck" required>
+                            <label class="form-check-label" for="confirmCheck">
+                                I understand this action is permanent and cannot be reversed
+                            </label>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="bi bi-trash-fill me-2"></i>
+                                Permanently Delete My Account
+                            </button>
+                            <a href="{% url 'settings' %}" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-arrow-left me-2"></i>
+                                Cancel - Keep My Account
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <small class="text-muted">
+                    Having second thoughts? You can always 
+                    <a href="{% url 'settings' %}">go back to settings</a>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmDelete() {
+    const username = "{{ user.username }}";
+    const confirmed = prompt(`Type your username "${username}" to confirm deletion:`);
+    
+    if (confirmed === username) {
+        return confirm('Are you absolutely sure? This cannot be undone!');
+    } else {
+        alert('Username does not match. Account deletion cancelled.');
+        return false;
+    }
+}
+</script>
+
+<style>
+.card-header h3 {
+    font-weight: 600;
+}
+
+.alert-danger h5 {
+    font-weight: 700;
+}
+
+.btn-lg {
+    padding: 1rem;
+    font-weight: 600;
+}
+</style>
+{% endblock %}

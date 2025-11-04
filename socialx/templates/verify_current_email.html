@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow">
+                <div class="card-header bg-warning">
+                    <h4 class="mb-0">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Verify Your Email
+                    </h4>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <i class="bi bi-envelope-exclamation" style="font-size: 4rem; color: #ffc107;"></i>
+                    </div>
+
+                    <h5 class="mb-3">Email Not Verified</h5>
+                    
+                    <div class="alert alert-info">
+                        <p>Your email address <strong>{{ user.email }}</strong> is not verified yet.</p>
+                    </div>
+
+                    <div class="alert alert-secondary">
+                        <h6>Why verify your email?</h6>
+                        <ul class="text-start mb-0">
+                            <li>Recover your account if you forget password</li>
+                            <li>Receive important notifications</li>
+                            <li>Increase account security</li>
+                            <li>Required for changing email</li>
+                        </ul>
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-send me-2"></i>Send Verification Code
+                            </button>
+                            <a href="{% url 'settings' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Back to Settings
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

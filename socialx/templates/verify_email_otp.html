@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-shield-check me-2"></i>Verify Email
+                    </h4>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <i class="bi bi-envelope-check" style="font-size: 4rem; color: #0d6efd;"></i>
+                    </div>
+
+                    <h5 class="mb-3">Enter Verification Code</h5>
+                    
+                    <div class="alert alert-info">
+                        <p class="mb-0">
+                            We sent a 6-digit code to:<br>
+                            <strong>{{ pending_email }}</strong>
+                        </p>
+                    </div>
+
+                    {% if time_remaining > 0 %}
+                    <div class="alert alert-warning">
+                        <i class="bi bi-clock me-2"></i>
+                        Code expires in <strong>{{ time_remaining }} minutes</strong>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-danger">
+                        <i class="bi bi-x-circle me-2"></i>
+                        Code has expired. Please request a new one.
+                    </div>
+                    {% endif %}
+
+                    <form method="POST" class="mb-4">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            {{ form.otp }}
+                            {% if form.otp.errors %}
+                                <div class="text-danger mt-2">
+                                    {% for error in form.otp.errors %}
+                                        {{ error }}<br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <small class="form-text text-muted">{{ form.otp.help_text }}</small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="bi bi-check-circle me-2"></i>Verify Code
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center">
+                        <p class="text-muted mb-2">Didn't receive the code?</p>
+                        <a href="{% url 'resend_otp' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Resend Code
+                        </a>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <a href="{% url 'settings' %}" class="btn btn-link text-muted">
+                        <i class="bi bi-arrow-left me-2"></i>Back to Settings
+                    </a>
+                </div>
+            </div>
+
+            <div class="alert alert-light mt-3">
+                <h6><i class="bi bi-info-circle me-2"></i>Tips:</h6>
+                <ul class="mb-0 small">
+                    <li>Check your spam/junk folder if you don't see the email</li>
+                    <li>Make sure {{ pending_email }} is correct</li>
+                    <li>The code is valid for 10 minutes</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

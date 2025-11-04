@@ -1,0 +1,115 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            
+            <!-- Warning Card -->
+            <div class="card border-danger shadow">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>Delete Post
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-circle me-2"></i>
+                        <strong>Warning!</strong> This action cannot be undone. Are you sure you want to delete this post?
+                    </div>
+
+                    <!-- Post Preview -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h6 class="text-muted mb-3">
+                                <i class="bi bi-eye me-2"></i>Post Preview:
+                            </h6>
+                            
+                            <!-- Post Author -->
+                            <div class="d-flex align-items-center mb-3">
+                                {% if post.author.profile.image %}
+                                    <img src="{{ post.author.profile.image.url }}" 
+                                         alt="{{ post.author.username }}" 
+                                         class="rounded-circle me-2" 
+                                         width="40" height="40"
+                                         style="object-fit: cover;">
+                                {% else %}
+                                    <img src="https://ui-avatars.com/api/?name={{ post.author.username }}&background=random&size=40" 
+                                         alt="{{ post.author.username }}" 
+                                         class="rounded-circle me-2">
+                                {% endif %}
+                                <div>
+                                    <strong>{{ post.author.username }}</strong>
+                                    <br>
+                                    <small class="text-muted">{{ post.created_at|timesince }} ago</small>
+                                </div>
+                            </div>
+
+                            <!-- Post Text -->
+                            <p class="mb-3">{{ post.text }}</p>
+                            
+                            <!-- Post Image -->
+                            {% if post.image %}
+                            <div class="mb-3">
+                                <img src="{{ post.image.url }}" 
+                                     class="img-fluid rounded" 
+                                     alt="Post image"
+                                     style="max-height: 300px; width: 100%; object-fit: cover;">
+                            </div>
+                            {% endif %}
+
+                            <!-- Post Video -->
+                            {% if post.video %}
+                            <div class="mb-3">
+                                <video controls class="w-100 rounded" style="max-height: 300px; background-color: #000;">
+                                    <source src="{{ post.video.url }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            {% endif %}
+
+                            <!-- Post Stats -->
+                            <div class="text-muted small">
+                                <i class="bi bi-heart me-1"></i>{{ post.likes.count }} likes
+                                <i class="bi bi-chat ms-3 me-1"></i>{{ post.comments.count }} comments
+                                <i class="bi bi-bookmark ms-3 me-1"></i>{{ post.saves.count }} saves
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delete Confirmation Form -->
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-lg" onclick="return confirmDelete()">
+                                <i class="bi bi-trash-fill me-2"></i>Yes, Delete This Post
+                            </button>
+                            <a href="{% url 'post_list' %}" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-x-circle me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmDelete() {
+    return confirm('Are you absolutely sure? This will permanently delete your post and all its comments!');
+}
+</script>
+
+<style>
+.card-header {
+    font-weight: 600;
+}
+
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+}
+</style>
+{% endblock %}

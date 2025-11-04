@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Welcome to SocialX
+{% endblock  %}
+
+{% block content %}
+
+<!-- 1. Hero Section: The Main Hook -->
+<div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    <h1 class="display-5 fw-bold">Welcome to SocialX</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">A refreshing new social platform where your voice matters. Share your moments, connect with communities, and engage in conversations that are important to you. No clutter, just connection.</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="{% url 'register' %}" class="btn btn-primary btn-lg px-4 gap-3">Create Your Account</a>
+            <a href="#features" class="btn btn-outline-secondary btn-lg px-4">Learn More</a>
+        </div>
+    </div>
+</div>
+
+<!-- 2. Features Section: "Why Join?" -->
+<div class="container px-4 py-5" id="features">
+    <h2 class="pb-2 border-bottom text-center">Built for a Better Experience</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 py-5">
+
+        <div class="col d-flex align-items-start">
+            <div class="text-bg-primary bg-gradient fs-4 me-3 p-2 rounded">
+                <i class="bi bi-camera-reels"></i>
+            </div>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4">Share Your Story</h3>
+                <p>Post photos, videos, and updates with an easy-to-use interface. Your feed, your control.</p>
+            </div>
+        </div>
+
+        <div class="col d-flex align-items-start">
+            <div class="text-bg-primary bg-gradient fs-4 me-3 p-2 rounded">
+                <i class="bi bi-hash"></i>
+            </div>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4">Find Your Tribe</h3>
+                <p>Join communities based on your hobbies and interests, from #Gaming to #Gardening.</p>
+            </div>
+        </div>
+
+        <div class="col d-flex align-items-start">
+            <div class="text-bg-primary bg-gradient fs-4 me-3 p-2 rounded">
+                <i class="bi bi-lock-fill"></i>
+            </div>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4">Privacy by Design</h3>
+                <p>Your data is yours. We offer robust privacy controls and end-to-end encryption in ChatX.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 3. Dual Call to Action Section (Your Suggestion!) -->
+<div class="p-5 my-4 bg-body-tertiary rounded-3">
+    <div class="container-fluid py-5 text-center">
+        <h2 class="display-5 fw-bold">Ready to Dive In?</h2>
+        <p class="fs-4">Explore the social world of SocialX or jump directly into a private conversation with ChatX.</p>
+        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center mt-4">
+            <!-- This button takes users to explore the social network -->
+            <a href="{% url 'register' %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-people-fill me-2"></i>Explore SocialX
+            </a>
+            <!-- This is the button you requested, taking users to the chat app -->
+            <a href="{% url 'chat_list' %}" class="btn btn-success btn-lg">
+                <i class="bi bi-send-fill me-2"></i>Launch ChatX
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<!-- 4. Social Proof / Community Showcase -->
+<div class="album py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">See What's Happening</h2>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">"Finally, a social media platform that respects its users. The community features are amazing for finding niche hobby groups!"</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-body-secondary">- Alex Johnson</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">"I love how fast and clean ChatX is. It feels secure, and the interface is just so intuitive. My friends and I switched over instantly."</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-body-secondary">- Maria Garcia</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">"The chronological feed is a game-changer. I actually see posts from the people I follow, when they post them. What a concept!"</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-body-secondary">- Ben Carter</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

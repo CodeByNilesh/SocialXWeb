@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-envelope me-2"></i>Change Email Address
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle me-2"></i>
+                        <strong>Current email:</strong> {{ user.email }}
+                        {% if user.profile.email_verified %}
+                            <span class="badge bg-success ms-2">
+                                <i class="bi bi-check-circle"></i> Verified
+                            </span>
+                        {% else %}
+                            <span class="badge bg-warning ms-2">
+                                <i class="bi bi-exclamation-circle"></i> Not Verified
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    {% if not user.profile.email_verified %}
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        Your current email is not verified.
+                        <a href="{% url 'verify_current_email' %}" class="alert-link">Verify it now</a>
+                    </div>
+                    {% endif %}
+
+                    <div class="alert alert-secondary">
+                        <h6><i class="bi bi-shield-check me-2"></i>Verification Process:</h6>
+                        <ol class="mb-0 small">
+                            <li>Enter your new email address</li>
+                            <li>We'll send a 6-digit verification code</li>
+                            <li>Enter the code to confirm the change</li>
+                            <li>Your email will be updated</li>
+                        </ol>
+                    </div>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            {{ form.new_email.label_tag }}
+                            {{ form.new_email }}
+                            {% if form.new_email.errors %}
+                                <div class="text-danger mt-2">
+                                    {% for error in form.new_email.errors %}
+                                        <small>{{ error }}</small><br>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-send me-2"></i>Send Verification Code
+                            </button>
+                            <a href="{% url 'settings' %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block title %}
+About Us
+{% endblock  %}
+
+{% block content %}
+
+<!-- 1. Hero Section: The Mission Statement -->
+<div class="p-5 mb-5 mt-4 bg-body-tertiary rounded-3 text-center">
+    <div class="container-fluid py-5">
+        <h1 class="display-4 fw-bold">Connecting People, Authentically.</h1>
+        <p class="fs-4 col-md-8 mx-auto">
+            In a world full of noise, SocialX was born from a simple idea: to create a space for genuine interaction. We're building a platform where you can share your world and have meaningful conversations, free from the clutter.
+        </p>
+    </div>
+</div>
+
+<!-- 2. Features Section: What We Offer -->
+<div class="container px-4 py-5" id="featured-3">
+    <h2 class="pb-2 border-bottom text-center">What We're Building</h2>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        
+        <div class="feature col text-center">
+            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-3 rounded-circle">
+                <i class="bi bi-people-fill"></i>
+            </div>
+            <h3 class="fs-2">SocialX</h3>
+            <p>Your social hub. Share updates, photos, and stories with friends and communities that matter to you. Discover new interests and connect with like-minded people in a positive and engaging environment.</p>
+        </div>
+
+        <div class="feature col text-center">
+            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-3 rounded-circle">
+                <i class="bi bi-chat-dots-fill"></i>
+            </div>
+            <h3 class="fs-2">ChatX</h3>
+            <p>Private, fast, and secure conversations. ChatX is our dedicated messaging app designed for direct communication. With end-to-end encryption, your chats stay between you and the people you talk to.</p>
+        </div>
+
+        <div class="feature col text-center">
+            <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3 p-3 rounded-circle">
+                <i class="bi bi-shield-check"></i>
+            </div>
+            <h3 class="fs-2">Your Space</h3>
+            <p>We believe in quality over quantity. Our platform is designed with powerful moderation tools and a commitment to user privacy, giving you control over your data and your online experience.</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- 3. Philosophy Section -->
+<div class="row my-5 justify-content-center">
+    <div class="col-lg-8 text-center">
+        <h2>Our Core Principles</h2>
+        <hr class="w-25 mx-auto mb-4">
+        
+        <h4 class="mt-4">Privacy First</h4>
+        <p>We don't sell your personal data. Period. Your privacy is not a feature; it's our foundation.</p>
+
+        <h4 class="mt-4">Authenticity Over Algorithms</h4>
+        <p>Our goal is to connect you with people, not keep you scrolling. We prioritize chronological feeds and user-driven discovery.</p>
+        
+        <h4 class="mt-4">Positive & Inclusive Spaces</h4>
+        <p>We are committed to fostering a community where everyone feels welcome and safe to express themselves respectfully.</p>
+    </div>
+</div>
+
+<!-- 4. Final Call to Action -->
+<div class="p-5 mt-4 bg-primary bg-opacity-10 rounded-3 text-center border border-primary">
+    <h2 class="fw-bold">Ready to Join the Conversation?</h2>
+    <p class="fs-5">Be a part of a growing community that values real connections.</p>
+    <a href="{% url 'register' %}" class="btn btn-primary btn-lg mt-3">Create Your Account</a>
+</div>
+
+{% endblock %}

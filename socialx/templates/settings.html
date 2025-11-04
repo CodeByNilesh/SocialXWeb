@@ -1,0 +1,231 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2 class="mb-4">⚙️ Settings</h2>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Edit Profile</h5>
+                    
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Current Profile Image Preview -->
+                        <div class="mb-3 text-center">
+                            {% if user.profile.image %}
+                                <img src="{{ user.profile.image.url }}" 
+                                     alt="Current profile picture" 
+                                     class="rounded-circle mb-2"
+                                     width="120" height="120"
+                                     style="object-fit: cover;">
+                            {% else %}
+                                <img src="https://ui-avatars.com/api/?name={{ user.username }}&background=random&size=120" 
+                                     alt="Default avatar" 
+                                     class="rounded-circle mb-2">
+                            {% endif %}
+                            <p class="text-muted small">Current Profile Picture</p>
+                        </div>
+
+                        <!-- First Name -->
+                        <div class="mb-3">
+                            <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
+                            {{ form.first_name }}
+                            {% if form.first_name.errors %}
+                                <div class="text-danger">{{ form.first_name.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Last Name -->
+                        <div class="mb-3">
+                            <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                            {{ form.last_name }}
+                            {% if form.last_name.errors %}
+                                <div class="text-danger">{{ form.last_name.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Profile Image -->
+                        <div class="mb-3">
+                            <label for="{{ form.image.id_for_label }}" class="form-label">Profile Picture</label>
+                            {{ form.image }}
+                            {% if form.image.errors %}
+                                <div class="text-danger">{{ form.image.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">Upload a new profile picture (optional)</small>
+                        </div>
+
+                        <!-- Bio -->
+                        <div class="mb-3">
+                            <label for="{{ form.bio.id_for_label }}" class="form-label">Bio</label>
+                            {{ form.bio }}
+                            {% if form.bio.errors %}
+                                <div class="text-danger">{{ form.bio.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Private Account Toggle -->
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                {{ form.is_private }}
+                                <label class="form-check-label" for="{{ form.is_private.id_for_label }}">
+                                    <strong>🔒 Private Account</strong>
+                                </label>
+                            </div>
+                            <small class="form-text text-muted">
+                                When enabled, only you can download your photos and videos. Others can still view them.
+                            </small>
+                            {% if form.is_private.errors %}
+                                <div class="text-danger">{{ form.is_private.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                💾 Save Changes
+                            </button>
+                            <a href="{% url 'profile' user.username %}" class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- After your existing profile form -->
+
+            <!-- Email Verification Status -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-envelope-check me-2"></i>Email Verification
+                    </h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ user.email }}</strong>
+                            {% if user.profile.email_verified %}
+                                <span class="badge bg-success ms-2">
+                                    <i class="bi bi-check-circle"></i> Verified
+                                </span>
+                            {% else %}
+                                <span class="badge bg-warning ms-2">
+                                    <i class="bi bi-exclamation-circle"></i> Not Verified
+                                </span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if not user.profile.email_verified %}
+                                <a href="{% url 'verify_current_email' %}" class="btn btn-sm btn-warning">
+                                    <i class="bi bi-shield-check me-1"></i>Verify Now
+                                </a>
+                            {% endif %}
+                            <a href="{% url 'change_email' %}" class="btn btn-sm btn-primary">
+                                <i class="bi bi-pencil me-1"></i>Change Email
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Username Change -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-person-badge me-2"></i>Username
+                    </h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ user.username }}</strong>
+                        </div>
+                        <div>
+                            <a href="{% url 'change_username' %}" class="btn btn-sm btn-primary">
+                                <i class="bi bi-pencil me-1"></i>Change Username
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Info -->
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Account Information</h5>
+                    <p><strong>Username:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Account Type:</strong> 
+                        {% if user.profile.is_private %}
+                            <span class="badge bg-secondary">🔒 Private</span>
+                        {% else %}
+                            <span class="badge bg-success">🌍 Public</span>
+                        {% endif %}
+                    </p>
+                    <p class="mb-0"><strong>Member since:</strong> {{ user.date_joined|date:"F d, Y" }}</p>
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="card mt-4 border-danger">
+                <div class="card-body">
+                    <h5 class="card-title text-danger">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        Danger Zone
+                    </h5>
+                    <p class="text-muted mb-3">
+                        Once you delete your account, there is no going back. Please be certain.
+                    </p>
+                    <a href="{% url 'delete_account' %}" class="btn btn-outline-danger">
+                        <i class="bi bi-trash me-2"></i>Delete My Account
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Make form inputs look better */
+    #id_first_name, #id_last_name, #id_bio {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+    }
+    
+    #id_bio {
+        font-family: inherit;
+    }
+    
+    #id_is_private {
+        width: 3em;
+        height: 1.5em;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+document.getElementById('id_image').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            // Show preview
+            const preview = document.querySelector('.rounded-circle');
+            preview.src = event.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+});
+</script>
+{% endblock %}
